@@ -40,22 +40,27 @@ public class Start {
             for (Attribute attribute : attributes) {
                 if(attribute.getName() == "name"){
                     String[] a = attribute.getValue().split("}");
-                    RestTemplate restTemplate = new RestTemplate();
-                    String url = "https://api.tjit.net/api/fanyi/?key=BsmDcnNxJi24M8xKFwumRVw9gL&text="+a[1]+"&from=en&to=zh";
-                    JSONObject result = restTemplate.getForObject(url, JSONObject.class);
-                    String text = result.getString("data");
-                    text = text.substring(text.indexOf("dst=")+4,text.indexOf("}]}"));
-                    //中文字符串校验
-                    if(!text.matches("[\\u4e00-\\u9fa5]+")){
-                        System.out.println("翻译失败，请手动翻译："+"<string id=\""+a[0].replace("{=","")+"\" text=\""+text+"\" />");
+                    if(a.length == 2){
+                        RestTemplate restTemplate = new RestTemplate();
+                        String url = "https://api.tjit.net/api/fanyi/?key=BsmDcnNxJi24M8xKFwumRVw9gL&text="+a[1]+"&from=en&to=zh";
+                        JSONObject result = restTemplate.getForObject(url, JSONObject.class);
+                        String text = result.getString("data");
+                        text = text.substring(text.indexOf("dst=")+4,text.indexOf("}]}"));
+                        str += "<string id=\""+a[0].replace("{=","")+"\" text=\""+text+"\" />\n";
+                        //中文字符串校验
+                        if(!text.matches("[\\u4e00-\\u9fa5]+")){
+                            System.out.println("翻译失败，请手动翻译："+"<string id=\""+a[0].replace("{=","")+"\" text=\""+text+"\" />");
+                        }else{
+                            System.out.println("翻译成功："+"<string id=\""+a[0].replace("{=","")+"\" text=\""+text+"\" />");
+                        }
                     }
-                    str += "<string id=\""+a[0].replace("{=","")+"\" text=\""+text+"\" />\n";
-                    System.out.println("翻译成功："+"<string id=\""+a[0].replace("{=","")+"\" text=\""+text+"\" />");
                 }
             }
         }
         writeFile(str,save_path);
         System.err.println("自动翻译成功，请查看："+save_path);
+        System.out.println("按回车退出...");
+        input_files.nextLine();
     }
 
     /**
