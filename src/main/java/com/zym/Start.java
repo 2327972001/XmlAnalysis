@@ -68,7 +68,7 @@ public class Start {
      * @param str
      */
     public static void writeFile(String str,String file_path) {
-        File file = new File("C:\\Users\\ZouYangMing\\Downloads\\Compressed\\1.txt");
+        File file = new File(file_path);
         try {
             FileWriter fileWriter = new FileWriter(file);
             fileWriter.write(str);
