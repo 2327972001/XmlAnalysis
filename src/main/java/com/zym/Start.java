@@ -75,7 +75,7 @@ public class Start {
                 }
                 writeFile(str,save_path);
                 System.err.println("自动翻译成功，请查看："+save_path);
-                System.out.println("回车退出...");
+                System.out.println("双击回车退出...");
                 input_files.nextLine();
                 break;
             }
@@ -84,8 +84,10 @@ public class Start {
                 Scanner input_a_files = new Scanner(System.in);
                 System.out.println("请输入需要检测的XML文件路径：");
                 String a_file_path = input_a_files.nextLine();
-                System.out.println("请输入相同字符串保存的TXT文件路径或名称（例如：a.txt 路径不能有中文）：");
+                System.out.println("请输入提取出相同字符串保存的TXT文件路径或名称（例如：a.txt 路径不能有中文）：");
                 String a_save_path = input_a_files.nextLine();
+                System.out.println("请输入提取出没问题字符串保存的TXT文件路径或名称（例如：b.txt 路径不能有中文）：");
+                String a_save2_path = input_a_files.nextLine();
                 //加载xml
                 File file = new File(a_file_path);
                 Document a_document = reader.read(new InputStreamReader(new FileInputStream(file), "UTF-8"));
@@ -120,14 +122,22 @@ public class Start {
                         new_map1.put(k,v);
                     }
                 });
+                //重复字符串
                 String str = "";
+                //没问题的字符串
+                String str1 = "";
                 for (Map.Entry<String, String> entry : new_map1.entrySet()) {
                     str += "<string id=\""+entry.getKey()+"\" text=\""+entry.getValue()+"\" />\n";;
                 }
+                for (Map.Entry<String, String> entry : new_map.entrySet()) {
+                    str1 += "<string id=\""+entry.getKey()+"\" text=\""+entry.getValue()+"\" />\n";;
+                }
                 writeFile(str,a_save_path);
+                writeFile(str1,a_save2_path);
                 System.out.println("注意：提取出来的都是要修改的，因为已经保留了一个重复字符串没有提取");
                 System.out.println("已把重复的提取出来了，请查看："+a_save_path);
-                System.out.println("回车退出...");
+                System.out.println("已把没问题的提取出来了，请查看："+a_save2_path);
+                System.out.println("双击回车退出...");
                 input_a_files.nextLine();
                 break;
             }
