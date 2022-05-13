@@ -6,7 +6,7 @@
 
     <groupId>com.zym</groupId>
     <artifactId>XmlAnalysis</artifactId>
-    <version>2.0</version>
+    <version>3.0</version>
 
     <dependencies>
         <!-- dom4j -->
@@ -34,7 +34,7 @@
 
     <build>
         <!-- 打包后的名字 -->
-        <finalName>XmlAnalysis_2.0</finalName>
+        <finalName>XmlAnalysis_3.0</finalName>
         <plugins>
             <!-- 配置启动类 -->
             <plugin>
