@@ -8,15 +8,14 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.File;
-import java.io.FileWriter;
+import java.io.*;
 import java.util.*;
 
 /**
  * @author ZouYangMing
  */
 public class Start {
-    public static void main(String[] args) throws DocumentException {
+    public static void main(String[] args) throws DocumentException, FileNotFoundException, UnsupportedEncodingException {
         //1.创建Reader对象
         SAXReader reader = new SAXReader();
         while (true){
@@ -34,7 +33,8 @@ public class Start {
                 System.err.println("（例如：a.txt 路径不能有中文）：");
                 String save_path = input_files.nextLine();
                 //2.加载xml
-                Document document = reader.read(new File(file_path));
+                File file = new File(file_path);
+                Document document = reader.read(file);
                 //3.获取根节点
                 Element rootElement = document.getRootElement();
                 //获取第二层节点
@@ -87,7 +87,8 @@ public class Start {
                 System.out.println("请输入相同字符串保存的TXT文件路径或名称（例如：a.txt 路径不能有中文）：");
                 String a_save_path = input_a_files.nextLine();
                 //加载xml
-                Document a_document = reader.read(new File(a_file_path));
+                File file = new File(a_file_path);
+                Document a_document = reader.read(new InputStreamReader(new FileInputStream(file), "UTF-8"));
                 //获取根节点
                 Element a_rootElement = a_document.getRootElement();
                 //获取第二层节点
